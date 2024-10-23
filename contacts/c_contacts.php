@@ -9,18 +9,41 @@ class ContactController
   
 
     public function createContact()
-    {
+    { 
+       $nomrbre = $_POST['nombre'];
+       $telefono = $_POST['telefono'];
+       $email = $_POST['email'];
 
+       $data = array(
+        'nombre' => $nomrbre,
+        'telefono' => $telefono,
+        'email' => $email,
+       ); 
+       $model = new ContactModel();
+       $model->saveContact($data);
+        
     }
 
     public function deleteContact($id)
     {
+        $model = new ContactModel();
+        $model->deleteContact($id);
 
     }
 
     public function updateContact($id)
     {
-
+        $nomrbre = $_POST['nombre'];
+        $telefono = $_POST['telefono'];
+        $email = $_POST['email'];
+        $id = $_POST['id'];
+        $data = array(
+            'nombre' => $nomrbre,
+            'telefono' => $telefono,
+            'email' => $email
+           ); 
+           $model = new ContactModel();
+           $model->updateContact($id, $data);
     }
 
     public function getAllContacts()
@@ -33,7 +56,7 @@ class ContactController
     }
 
     public function view(){
-         echo 'Hello World!';  // Replace with your logic to display contact details
+        include 'v_contacts.php';
     }
     
 }

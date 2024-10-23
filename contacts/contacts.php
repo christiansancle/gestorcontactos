@@ -14,7 +14,7 @@ switch ($_REQUEST['modo']) {
         $manageContact->deleteContact($_REQUEST['id']);
         break;
     case 'updateContact':
-        $manageContact->updateContact();
+        $manageContact->updateContact($_REQUEST['id']);
         break;
     default:
         $manageContact->view();

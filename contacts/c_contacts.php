@@ -40,22 +40,33 @@ class ContactController {
     }
     
 
-    public function updateContact($id) {
+    public function updateContact() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nombre = $_POST['nombre'];
-            $telefono = $_POST['telefono'];
-            $email = $_POST['email'];
+            // Verificar que todos los datos necesarios están presentes
+            if (isset($_POST['id'], $_POST['nombre'], $_POST['telefono'], $_POST['email'])) {
+                $id = $_POST['id'];
+                $nombre = $_POST['nombre'];
+                $telefono = $_POST['telefono'];
+                $email = $_POST['email'];
     
-            $sql = "UPDATE contactos SET cnto_nombre = ?, cnto_numerotelefono = ?, cnto_email = ? WHERE cnto_id = ?";
-            $params = [$nombre, $telefono, $email, $id];
+                // Consulta SQL para actualizar el contacto
+                $sql = "UPDATE contactos SET cnto_nombre = ?, cnto_numerotelefono = ?, cnto_email = ? WHERE cnto_id = ?";
+                $params = [$nombre, $telefono, $email, $id];
     
-            if ($this->model->update($sql, $params)) {
-                header("Location: index.php"); // Redirige a la lista de contactos
+                // Ejecutar la consulta y verificar si fue exitosa
+                if ($this->model->update($sql, $params)) {
+                    header("Location: index.php"); // Redirigir a la lista de contactos
+                    exit(); // Asegurarse de que no se ejecute más código
+                } else {
+                    echo "Error al actualizar el contacto.";
+                }
             } else {
-                echo "Error al actualizar el contacto.";
+                echo "Datos faltantes para actualizar el contacto.";
             }
         }
     }
+    
+    
     
 
     public function getAllContacts() {

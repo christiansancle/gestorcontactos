@@ -40,9 +40,6 @@ class ContactModel {
     }
     
 
-    public function delete($sql, $params) {
-        return $this->db->delete($sql, $params);
-    }
 
     public function getAllContacts() {
         $sql = "SELECT * FROM contactos";
@@ -64,12 +61,42 @@ class ContactModel {
         return $this->update($sql, [$data['nombre'], $data['telefono'], $data['email'], $id]);
     }
 
+    public function delete($sql, $params) {
+        $conn = $this->db->connect(); // Conexión a la base de datos
+        $stmt = $conn->prepare($sql);
+
+        // Verificar si la preparación fue exitosa
+        if ($stmt === false) {
+            die("Error al preparar la consulta: " . htmlspecialchars($conn->error));
+        }
+
+        // Asignar el parámetro id a la consulta
+        $stmt->bind_param("i", ...$params); // "i" para indicar un entero (id)
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            return true;
+        } else {
+            echo "Error al ejecutar la consulta: " . htmlspecialchars($stmt->error);
+            $stmt->close();
+            $conn->close();
+            return false;
+        }
+    }
+
     public function deleteContact($id) {
         $sql = "DELETE FROM contactos WHERE cnto_id = ?";
         return $this->delete($sql, [$id]);
     }
 
+
     public function getContactById($id) {
         // Implement this method if you need to fetch a contact by ID
     }
+    
+
+    
+
 }

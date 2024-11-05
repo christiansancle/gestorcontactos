@@ -12,6 +12,105 @@ $contacts = $controller->getAllContacts();
     <title>Agenda de Contactos</title>
     <!-- Incluyendo Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    /* Estilos generales futuristas tipo Tron */
+    body {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+    h1, h2 {
+        color: #00bcd4; /* Color Tron para los encabezados */
+    }
+
+    /* Estilo de borde futurista para la tabla y formulario */
+    .table, form {
+        border: 2px solid #00bcd4;
+        box-shadow: 0px 0px 10px #00bcd4;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    /* Estilos de la tabla con fondo blanco en todas las filas */
+    .table-bordered {
+        background-color: #ffffff; /* Fondo blanco para toda la tabla */
+        color: #000000; /* Texto en negro */
+    }
+    .table th {
+        background-color: #00bcd4; /* Fondo azul Tron para encabezado */
+        color: #ffffff; /* Texto blanco en el encabezado */
+        text-align: center;
+    }
+    .table td {
+        background-color: #ffffff; /* Fondo blanco para todas las filas */
+        color: #000000; /* Texto negro */
+        text-align: center;
+    }
+    .table tr:hover td {
+        background-color: #e0f7fa; /* Color claro al pasar el cursor */
+    }
+
+    /* Estilos para los botones */
+    .btn-warning {
+        background-color: #ffa500;
+        border: none;
+        color: #000;
+    }
+    .btn-danger {
+        background-color: #ff0000;
+        border: none;
+        color: #ffeb3b; /* Texto amarillo en botón rojo */
+    }
+    .btn-danger:hover, .btn-warning:hover {
+        opacity: 0.8;
+    }
+
+    /* Quitar efecto de neón */
+    .btn-danger, .btn-warning {
+        box-shadow: none; /* Sin borde de neón */
+    }
+
+    /* Estilos del formulario para agregar nuevo contacto */
+    form {
+        margin-top: 20px;
+    }
+    .form-control {
+        background-color: #333;
+        color: #ffffff;
+        border: 1px solid #00bcd4;
+    }
+    .btn-primary {
+        background-color: #00bcd4;
+        border: none;
+    }
+
+    /* Estilos del modal de modificación */
+    .modal-content {
+        background-color: #1a1a1a;
+        border: 2px solid #00bcd4; /* Borde azul Tron */
+        box-shadow: 0px 0px 10px #00bcd4;
+        border-radius: 10px;
+        color: #ffffff;
+    }
+    .modal-header, .modal-footer {
+        border-bottom: 1px solid #00bcd4;
+    }
+    .modal-title {
+        color: #00bcd4;
+    }
+    .modal-body .form-control {
+        background-color: #333;
+        color: #ffffff;
+        border: 1px solid #00bcd4;
+    }
+    .btn-close {
+        background-color: #00bcd4;
+        border-radius: 50%;
+    }
+</style>
+
+
+
 </head>
 <body>
     <div class="container">
@@ -35,7 +134,6 @@ $contacts = $controller->getAllContacts();
                             <td><?php echo htmlspecialchars($contact['cnto_numerotelefono']); ?></td>
                             <td><?php echo htmlspecialchars($contact['cnto_email']); ?></td>
                             <td>
-                                <!-- Botón de modificar -->
                                 <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
                                     data-id="<?php echo $contact['cnto_id']; ?>" 
                                     data-nombre="<?php echo htmlspecialchars($contact['cnto_nombre']); ?>" 
@@ -43,8 +141,11 @@ $contacts = $controller->getAllContacts();
                                     data-email="<?php echo htmlspecialchars($contact['cnto_email']); ?>">
                                     Modificar
                                 </button>
-                                <!-- Botón de eliminar -->
-                                <a href="index.php?action=delete&id=<?php echo $contact['cnto_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este contacto?');">Eliminar</a>
+                                <form method="POST" action="index.php?modo=deleteContact" style="display:inline;">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" value="<?php echo $contact['cnto_id']; ?>">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este contacto?');">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -104,6 +205,7 @@ $contacts = $controller->getAllContacts();
             </div>
         </div>
     </div>
+    
 
     <!-- Incluyendo JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -111,13 +213,12 @@ $contacts = $controller->getAllContacts();
         // Script para llenar el modal con los datos del contacto
         const editModal = document.getElementById('editModal');
         editModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget; // Botón que abrió el modal
+            const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
             const nombre = button.getAttribute('data-nombre');
             const telefono = button.getAttribute('data-telefono');
             const email = button.getAttribute('data-email');
 
-            // Actualiza el contenido del modal
             const editId = editModal.querySelector('#editId');
             const editNombre = editModal.querySelector('#editNombre');
             const editTelefono = editModal.querySelector('#editTelefono');

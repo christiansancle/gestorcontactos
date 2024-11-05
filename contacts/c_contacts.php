@@ -1,6 +1,5 @@
 <?php
 
-
 include_once 'm_contacts.php'; // Asegúrate de incluir tu modelo
 
 class ContactController {
@@ -26,7 +25,6 @@ class ContactController {
             }
         }
     }
-    
 
     public function deleteContact($id) {
         $sql = "DELETE FROM contactos WHERE cnto_id = ?";
@@ -38,22 +36,18 @@ class ContactController {
             echo "Error al eliminar el contacto.";
         }
     }
-    
 
     public function updateContact() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Verificar que todos los datos necesarios están presentes
             if (isset($_POST['id'], $_POST['nombre'], $_POST['telefono'], $_POST['email'])) {
                 $id = $_POST['id'];
                 $nombre = $_POST['nombre'];
                 $telefono = $_POST['telefono'];
                 $email = $_POST['email'];
-    
-                // Consulta SQL para actualizar el contacto
+
                 $sql = "UPDATE contactos SET cnto_nombre = ?, cnto_numerotelefono = ?, cnto_email = ? WHERE cnto_id = ?";
                 $params = [$nombre, $telefono, $email, $id];
-    
-                // Ejecutar la consulta y verificar si fue exitosa
+
                 if ($this->model->update($sql, $params)) {
                     header("Location: index.php"); // Redirigir a la lista de contactos
                     exit(); // Asegurarse de que no se ejecute más código
@@ -65,13 +59,9 @@ class ContactController {
             }
         }
     }
-    
-    
-    
 
     public function getAllContacts() {
-        $model = new ContactModel();
-        return $model->getContact();
+        return $this->model->getAllContacts();
     }
 
     public function view() {

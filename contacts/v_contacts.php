@@ -6,6 +6,7 @@ $contacts = $controller->getAllContacts();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,106 +16,159 @@ $contacts = $controller->getAllContacts();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
-    /* Estilos generales futuristas tipo Tron */
-    body {
-        background-color: #1a1a1a;
-        color: #ffffff;
-        font-family: Arial, sans-serif;
-    }
-    h1, h2 {
-        color: #00bcd4; 
-        text-align: center;/* Color Tron para los encabezados */
-    }
+        /* Estilos generales futuristas tipo Tron */
+        body {
+            background-color: #121212;
+            /* Fondo ligeramente más oscuro */
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease;
+            /* Transición suave al cargar */
+        }
 
-    /* Estilo de borde futurista para la tabla y formulario */
-    .table, form {
-        border: 2px solid #00bcd4;
-        box-shadow: 0px 0px 10px #00bcd4;
-        border-radius: 10px;
-        padding: 10px;
-    }
+        h1,
+        h2 {
+            color: #00bcd4;
+            text-align: center;
+            /* Centrando el título */
+            text-shadow: 0px 0px 8px rgba(0, 188, 212, 0.6);
+            /* Sutil sombra brillante */
+        }
 
-    /* Estilos de la tabla con fondo blanco en todas las filas */
-    .table-bordered {
-        background-color: #ffffff; /* Fondo blanco para toda la tabla */
-        color: #000000; /* Texto en negro */
-    }
-    .table th {
-        background-color: #00bcd4; /* Fondo azul Tron para encabezado */
-        color: #ffffff; /* Texto blanco en el encabezado */
-        text-align: center;
-    }
-    .table td {
-        background-color: #ffffff; /* Fondo blanco para todas las filas */
-        color: #000000; /* Texto negro */
-        text-align: center;
-    }
-    .table tr:hover td {
-        background-color: #e0f7fa; /* Color claro al pasar el cursor */
-    }
+        /* Estilo de borde futurista para la tabla y formulario */
+        .table,
+        form {
+            border: 2px solid #00bcd4;
+            box-shadow: 0px 0px 15px rgba(0, 188, 212, 0.4);
+            /* Sombra más suave */
+            border-radius: 12px;
+            /* Bordes ligeramente más redondeados */
+            padding: 10px;
+            transition: transform 0.3s ease;
+            /* Suave efecto hover */
+        }
 
-    /* Estilos para los botones */
-    .btn-warning {
-        background-color: #ffa500;
-        border: none;
-        color: #000;
-    }
-    .btn-danger {
-        background-color: #ff0000;
-        border: none;
-        color: #ffeb3b; /* Texto amarillo en botón rojo */
-    }
-    .btn-danger:hover, .btn-warning:hover {
-        opacity: 0.8;
-    }
+        .table:hover,
+        form:hover {
+            transform: scale(1.02);
+            /* Ligeramente más grande al pasar el cursor */
+        }
 
-    /* Quitar efecto de neón */
-    .btn-danger, .btn-warning {
-        box-shadow: none; /* Sin borde de neón */
-    }
+        /* Estilos de la tabla */
+        .table-bordered {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 8px;
+        }
 
-    /* Estilos del formulario para agregar nuevo contacto */
-    form {
-        margin-top: 20px;
-    }
-    .form-control {
-        background-color: #333;
-        color: #ffffff;
-        border: 1px solid #00bcd4;
-    }
-    .btn-primary {
-        background-color: #00bcd4;
-        border: none;
-    }
+        .table th {
+            background-color: #00bcd4;
+            color: #ffffff;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
 
-    /* Estilos del modal de modificación */
-    .modal-content {
-        background-color: #1a1a1a;
-        border: 2px solid #00bcd4; /* Borde azul Tron */
-        box-shadow: 0px 0px 10px #00bcd4;
-        border-radius: 10px;
-        color: #ffffff;
-    }
-    .modal-header, .modal-footer {
-        border-bottom: 1px solid #00bcd4;
-    }
-    .modal-title {
-        color: #00bcd4;
-    }
-    .modal-body .form-control {
-        background-color: #333;
-        color: #ffffff;
-        border: 1px solid #00bcd4;
-    }
-    .btn-close {
-        background-color: #00bcd4;
-        border-radius: 50%;
-    }
-</style>
+        .table td {
+            background-color: #ffffff;
+            color: #000000;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .table tr:hover td {
+            background-color: #e0f7fa;
+        }
+
+        /* Botones */
+        .btn-warning {
+            background-color: #ffa500;
+            border: none;
+            color: #000;
+            box-shadow: 0px 0px 8px rgba(255, 165, 0, 0.4);
+        }
+
+        .btn-danger {
+            background-color: #ff0000;
+            border: none;
+            color: #ffeb3b;
+            box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn-danger:hover,
+        .btn-warning:hover {
+            opacity: 0.85;
+            box-shadow: 0px 0px 12px rgba(255, 0, 0, 0.6);
+        }
+
+        /* Estilos del formulario */
+        .form-control {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #00bcd4;
+            border-radius: 5px;
+            padding: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: #444;
+        }
+
+        /* Botón de formulario */
+        .btn-primary {
+            background-color: #00bcd4;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0097a7;
+            transform: scale(1.05);
+        }
+
+        /* Estilos del modal */
+        .modal-content {
+            background-color: #1a1a1a;
+            border: 2px solid #00bcd4;
+            box-shadow: 0px 0px 20px rgba(0, 188, 212, 0.6);
+            border-radius: 10px;
+            color: #ffffff;
+        }
+
+        .modal-header,
+        .modal-footer {
+            border-bottom: 1px solid #00bcd4;
+            background-color: #121212;
+        }
+
+        .modal-title {
+            color: #00bcd4;
+        }
+
+        .modal-body .form-control {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #00bcd4;
+        }
+
+        /* Botón de cierre del modal */
+        .btn-close {
+            background-color: #00bcd4;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+            background-color: #0097a7;
+        }
+    </style>
 
 
 
 </head>
+
 <body>
     <div class="container">
         <h1 class="mt-4">Agenda de Contactos</h1>
@@ -137,10 +191,10 @@ $contacts = $controller->getAllContacts();
                             <td><?php echo htmlspecialchars($contact['cnto_numerotelefono']); ?></td>
                             <td><?php echo htmlspecialchars($contact['cnto_email']); ?></td>
                             <td>
-                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
-                                    data-id="<?php echo $contact['cnto_id']; ?>" 
-                                    data-nombre="<?php echo htmlspecialchars($contact['cnto_nombre']); ?>" 
-                                    data-telefono="<?php echo htmlspecialchars($contact['cnto_numerotelefono']); ?>" 
+                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal"
+                                    data-id="<?php echo $contact['cnto_id']; ?>"
+                                    data-nombre="<?php echo htmlspecialchars($contact['cnto_nombre']); ?>"
+                                    data-telefono="<?php echo htmlspecialchars($contact['cnto_numerotelefono']); ?>"
                                     data-email="<?php echo htmlspecialchars($contact['cnto_email']); ?>">
                                     Modificar
                                 </button>
@@ -150,8 +204,8 @@ $contacts = $controller->getAllContacts();
                                     <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?php echo $contact['cnto_id']; ?>')">Eliminar</button>
                                 </form>
                         </tr>
-                        
-                                                <?php endforeach; ?>
+
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else: ?>
@@ -208,7 +262,7 @@ $contacts = $controller->getAllContacts();
             </div>
         </div>
     </div>
-    
+
 
     <!-- Incluyendo JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -235,7 +289,7 @@ $contacts = $controller->getAllContacts();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-       function confirmDelete(contactId) {
+        function confirmDelete(contactId) {
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: "No podrás deshacer esta acción.",
@@ -254,4 +308,5 @@ $contacts = $controller->getAllContacts();
         }
     </script>
 </body>
+
 </html>

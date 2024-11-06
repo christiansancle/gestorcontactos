@@ -237,8 +237,8 @@ $contacts = $controller->getAllContacts();
        function confirmDelete(contactId) {
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: "Nón.",
-                icon: 'info',
+                text: "No podrás deshacer esta acción.",
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',

@@ -12,6 +12,7 @@ $contacts = $controller->getAllContacts();
     <title>Agenda de Contactos</title>
     <!-- Incluyendo Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
     /* Estilos generales futuristas tipo Tron */

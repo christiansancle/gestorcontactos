@@ -29,7 +29,6 @@ $contacts = $controller->getAllContacts();
         h1,
         h2 {
             color: #00e5ff;
-            /* Color ligeramente más brillante */
             text-align: center;
             text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.6);
             position: relative;
@@ -54,7 +53,6 @@ $contacts = $controller->getAllContacts();
             }
         }
 
-        /* Bordes brillantes y transiciones suaves */
         .table,
         form {
             border: 2px solid #00e5ff;
@@ -70,7 +68,6 @@ $contacts = $controller->getAllContacts();
             box-shadow: 0px 0px 15px rgba(0, 229, 255, 0.6);
         }
 
-        /* Tabla con ajuste de colores y bordes más definidos */
         .table-bordered {
             background-color: #f9f9f9;
             color: #000;
@@ -92,7 +89,6 @@ $contacts = $controller->getAllContacts();
             background-color: #ccf2f4;
         }
 
-        /* Botones con efecto de iluminación suave */
         .btn-warning,
         .btn-danger,
         .btn-primary {
@@ -124,7 +120,6 @@ $contacts = $controller->getAllContacts();
             transform: scale(1.05);
         }
 
-        /* Estilos del formulario */
         .form-control {
             background-color: #282828;
             color: #ffffff;
@@ -139,7 +134,6 @@ $contacts = $controller->getAllContacts();
             box-shadow: 0px 0px 8px rgba(0, 229, 255, 0.6);
         }
 
-        /* Modal con sombra y bordes redondeados */
         .modal-content {
             background-color: #141414;
             border: 2px solid #00e5ff;
@@ -165,7 +159,6 @@ $contacts = $controller->getAllContacts();
             border: 1px solid #00e5ff;
         }
 
-        /* Botón de cierre del modal */
         .btn-close {
             background-color: #00e5ff;
             border-radius: 50%;
@@ -176,17 +169,56 @@ $contacts = $controller->getAllContacts();
             background-color: #00b8d4;
             opacity: 1;
         }
+
+        /* Estilo del checkbox oculto */
+        .notify-checkbox {
+            display: none;
+        }
+
+        /* Estilos de la notificación */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .notify-checkbox:checked+.notification {
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInOut 3s ease forwards;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
     </style>
-
-
-
 </head>
 
 <body>
     <div class="container">
         <h1 class="mt-4">Agenda de Contactos</h1>
 
-        <!-- Mostrar lista de contactos -->
+        <!-- Checkbox oculto para la notificación de guardado -->
+        <input type="checkbox" id="notify" class="notify-checkbox" />
+        <label for="notify" class="notification">¡Contacto guardado con éxito!</label>
+
         <?php if (!empty($contacts)): ?>
             <table class="table table-bordered table-striped mt-4">
                 <thead>
@@ -217,7 +249,6 @@ $contacts = $controller->getAllContacts();
                                     <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?php echo $contact['cnto_id']; ?>')">Eliminar</button>
                                 </form>
                         </tr>
-
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -227,7 +258,6 @@ $contacts = $controller->getAllContacts();
             </div>
         <?php endif; ?>
 
-        <!-- Formulario para agregar nuevos contactos -->
         <h2 class="mt-4">Agregar Nuevo Contacto</h2>
         <form method="POST" action="index.php?modo=createContact" class="mt-3">
             <div class="mb-3">
@@ -242,84 +272,12 @@ $contacts = $controller->getAllContacts();
                 <label for="email" class="form-label">Correo</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Correo" required>
             </div>
-            <button type="submit" class="btn btn-primary">Agregar Contacto</button>
+            <button type="submit" class="btn btn-primary"
+                onclick="setTimeout(() => { document.getElementById('notify').checked = true; }, 500);">
+                Agregar Contacto
+            </button>
         </form>
-
-        <!-- Modal para editar contacto -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Modificar Contacto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" action="index.php?modo=updateContact">
-                            <input type="hidden" id="editId" name="id">
-                            <div class="mb-3">
-                                <label for="editNombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="editNombre" name="nombre" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editTelefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="editTelefono" name="telefono" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editEmail" class="form-label">Correo</label>
-                                <input type="email" class="form-control" id="editEmail" name="email" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Actualizar Contacto</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-
-
-    <!-- Incluyendo JavaScript de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Script para llenar el modal con los datos del contacto
-        const editModal = document.getElementById('editModal');
-        editModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const id = button.getAttribute('data-id');
-            const nombre = button.getAttribute('data-nombre');
-            const telefono = button.getAttribute('data-telefono');
-            const email = button.getAttribute('data-email');
-
-            const editId = editModal.querySelector('#editId');
-            const editNombre = editModal.querySelector('#editNombre');
-            const editTelefono = editModal.querySelector('#editTelefono');
-            const editEmail = editModal.querySelector('#editEmail');
-
-            editId.value = id;
-            editNombre.value = nombre;
-            editTelefono.value = telefono;
-            editEmail.value = email;
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function confirmDelete(contactId) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "No podrás deshacer esta acción.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Si el usuario confirma, envía el formulario correspondiente
-                    document.getElementById(`deleteForm-${contactId}`).submit();
-                }
-            });
-        }
-    </script>
 </body>
 
 </html>

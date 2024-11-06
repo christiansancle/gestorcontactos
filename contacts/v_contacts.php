@@ -234,7 +234,23 @@ $contacts = $controller->getAllContacts();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-       
+       function confirmDelete(contactId) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Nón.",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, envía el formulario correspondiente
+                    document.getElementById(`deleteForm-${contactId}`).submit();
+                }
+            });
+        }
     </script>
 </body>
 </html>

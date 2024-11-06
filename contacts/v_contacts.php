@@ -17,151 +17,164 @@ $contacts = $controller->getAllContacts();
 
     <style>
         /* Estilos generales futuristas tipo Tron */
+        /* Fondo más oscuro y transición de color */
         body {
-            background-color: #121212;
-            /* Fondo ligeramente más oscuro */
+            background-color: #101010;
             color: #ffffff;
             font-family: Arial, sans-serif;
-            transition: background-color 0.3s ease;
-            /* Transición suave al cargar */
+            transition: background-color 0.4s ease-in-out;
         }
 
+        /* Títulos con efecto de destello y animación de brillo */
         h1,
         h2 {
-            color: #00bcd4;
+            color: #00e5ff;
+            /* Color ligeramente más brillante */
             text-align: center;
-            /* Centrando el título */
-            text-shadow: 0px 0px 8px rgba(0, 188, 212, 0.6);
-            /* Sutil sombra brillante */
+            text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.6);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Estilo de borde futurista para la tabla y formulario */
+        h1:before,
+        h2:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(0, 229, 255, 0.4), transparent);
+            animation: shine 2.5s infinite;
+        }
+
+        @keyframes shine {
+            to {
+                left: 100%;
+            }
+        }
+
+        /* Bordes brillantes y transiciones suaves */
         .table,
         form {
-            border: 2px solid #00bcd4;
-            box-shadow: 0px 0px 15px rgba(0, 188, 212, 0.4);
-            /* Sombra más suave */
+            border: 2px solid #00e5ff;
+            box-shadow: 0px 0px 12px rgba(0, 229, 255, 0.3);
             border-radius: 12px;
-            /* Bordes ligeramente más redondeados */
-            padding: 10px;
-            transition: transform 0.3s ease;
-            /* Suave efecto hover */
+            padding: 12px;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
         .table:hover,
         form:hover {
             transform: scale(1.02);
-            /* Ligeramente más grande al pasar el cursor */
+            box-shadow: 0px 0px 15px rgba(0, 229, 255, 0.6);
         }
 
-        /* Estilos de la tabla */
+        /* Tabla con ajuste de colores y bordes más definidos */
         .table-bordered {
-            background-color: #ffffff;
-            color: #000000;
+            background-color: #f9f9f9;
+            color: #000;
             border-radius: 8px;
         }
 
         .table th {
-            background-color: #00bcd4;
-            color: #ffffff;
+            background-color: #00e5ff;
+            color: #fff;
             text-align: center;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
         }
 
         .table td {
-            background-color: #ffffff;
-            color: #000000;
-            text-align: center;
-            transition: background-color 0.3s ease;
+            background-color: #fdfdfd;
+            color: #333;
         }
 
         .table tr:hover td {
-            background-color: #e0f7fa;
+            background-color: #ccf2f4;
         }
 
-        /* Botones */
-        .btn-warning {
-            background-color: #ffa500;
-            border: none;
-            color: #000;
-            box-shadow: 0px 0px 8px rgba(255, 165, 0, 0.4);
+        /* Botones con efecto de iluminación suave */
+        .btn-warning,
+        .btn-danger,
+        .btn-primary {
+            border-radius: 6px;
+            padding: 6px 12px;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0px 0px 10px rgba(255, 165, 0, 0.4);
+        }
+
+        .btn-warning:hover {
+            background-color: #ffcc80;
+            box-shadow: 0px 0px 12px rgba(255, 165, 0, 0.7);
         }
 
         .btn-danger {
-            background-color: #ff0000;
-            border: none;
-            color: #ffeb3b;
-            box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.4);
+            box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.4);
         }
 
-        .btn-danger:hover,
-        .btn-warning:hover {
-            opacity: 0.85;
-            box-shadow: 0px 0px 12px rgba(255, 0, 0, 0.6);
+        .btn-danger:hover {
+            background-color: #ff3333;
+            color: #fff;
+            box-shadow: 0px 0px 12px rgba(255, 0, 0, 0.7);
+            transform: scale(1.05);
+        }
+
+        .btn-primary:hover {
+            background-color: #00b8d4;
+            box-shadow: 0px 0px 12px rgba(0, 229, 255, 0.7);
+            transform: scale(1.05);
         }
 
         /* Estilos del formulario */
         .form-control {
-            background-color: #333;
+            background-color: #282828;
             color: #ffffff;
-            border: 1px solid #00bcd4;
-            border-radius: 5px;
-            padding: 8px;
-            transition: background-color 0.3s ease;
+            border: 1px solid #00e5ff;
+            border-radius: 8px;
+            padding: 10px;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
         }
 
         .form-control:focus {
-            background-color: #444;
+            border-color: #00b8d4;
+            box-shadow: 0px 0px 8px rgba(0, 229, 255, 0.6);
         }
 
-        /* Botón de formulario */
-        .btn-primary {
-            background-color: #00bcd4;
-            border: none;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0097a7;
-            transform: scale(1.05);
-        }
-
-        /* Estilos del modal */
+        /* Modal con sombra y bordes redondeados */
         .modal-content {
-            background-color: #1a1a1a;
-            border: 2px solid #00bcd4;
-            box-shadow: 0px 0px 20px rgba(0, 188, 212, 0.6);
-            border-radius: 10px;
+            background-color: #141414;
+            border: 2px solid #00e5ff;
+            box-shadow: 0px 0px 15px rgba(0, 229, 255, 0.6);
+            border-radius: 12px;
             color: #ffffff;
         }
 
         .modal-header,
         .modal-footer {
-            border-bottom: 1px solid #00bcd4;
-            background-color: #121212;
+            border-bottom: 1px solid #00e5ff;
+            background-color: #101010;
         }
 
         .modal-title {
-            color: #00bcd4;
+            color: #00e5ff;
+            font-weight: bold;
         }
 
         .modal-body .form-control {
-            background-color: #333;
+            background-color: #222;
             color: #ffffff;
-            border: 1px solid #00bcd4;
+            border: 1px solid #00e5ff;
         }
 
         /* Botón de cierre del modal */
         .btn-close {
-            background-color: #00bcd4;
+            background-color: #00e5ff;
             border-radius: 50%;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         .btn-close:hover {
+            background-color: #00b8d4;
             opacity: 1;
-            background-color: #0097a7;
         }
     </style>
 

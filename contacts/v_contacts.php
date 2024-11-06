@@ -22,7 +22,8 @@ $contacts = $controller->getAllContacts();
         font-family: Arial, sans-serif;
     }
     h1, h2 {
-        color: #00bcd4; /* Color Tron para los encabezados */
+        color: #00bcd4; 
+        text-align: center;/* Color Tron para los encabezados */
     }
 
     /* Estilo de borde futurista para la tabla y formulario */

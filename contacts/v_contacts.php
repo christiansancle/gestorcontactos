@@ -277,6 +277,81 @@ $contacts = $controller->getAllContacts();
                 Agregar Contacto
             </button>
         </form>
+        <!-- Modal para editar contacto -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Modificar Contacto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="index.php?modo=updateContact">
+                            <input type="hidden" id="editId" name="id">
+                            <div class="mb-3">
+                                <label for="editNombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="editNombre" name="nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editTelefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="editTelefono" name="telefono" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">Correo</label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar Contacto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Incluyendo JavaScript de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Script para llenar el modal con los datos del contacto
+        const editModal = document.getElementById('editModal');
+        editModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const nombre = button.getAttribute('data-nombre');
+            const telefono = button.getAttribute('data-telefono');
+            const email = button.getAttribute('data-email');
+
+            const editId = editModal.querySelector('#editId');
+            const editNombre = editModal.querySelector('#editNombre');
+            const editTelefono = editModal.querySelector('#editTelefono');
+            const editEmail = editModal.querySelector('#editEmail');
+
+            editId.value = id;
+            editNombre.value = nombre;
+            editTelefono.value = telefono;
+            editEmail.value = email;
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(contactId) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás deshacer esta acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si el usuario confirma, envía el formulario correspondiente
+                    document.getElementById(`deleteForm-${contactId}`).submit();
+                }
+            });
+        }
+    </script>
     </div>
 </body>
 

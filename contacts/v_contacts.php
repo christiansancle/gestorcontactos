@@ -12,6 +12,7 @@ $contacts = $controller->getAllContacts();
     <title>Agenda de Contactos</title>
     <!-- Incluyendo Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
     /* Estilos generales futuristas tipo Tron */
     body {
@@ -141,14 +142,14 @@ $contacts = $controller->getAllContacts();
                                     data-email="<?php echo htmlspecialchars($contact['cnto_email']); ?>">
                                     Modificar
                                 </button>
-                                <form method="POST" action="index.php?modo=deleteContact" style="display:inline;">
+                                <form id="deleteForm-<?php echo $contact['cnto_id']; ?>" method="POST" action="index.php?modo=deleteContact" style="display:inline;">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="id" value="<?php echo $contact['cnto_id']; ?>">
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar este contacto?');">Eliminar</button>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?php echo $contact['cnto_id']; ?>')">Eliminar</button>
                                 </form>
-                            </td>
                         </tr>
-                    <?php endforeach; ?>
+                        
+                                                <?php endforeach; ?>
                 </tbody>
             </table>
         <?php else: ?>
@@ -230,5 +231,7 @@ $contacts = $controller->getAllContacts();
             editEmail.value = email;
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
 </body>
 </html>
